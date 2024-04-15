@@ -41,7 +41,7 @@ async def help_user(bot, update):
 
 @pyrogram.Client.on_message(pyrogram.filters.command(["start"]))
 async def start(bot, update):
-    if update.from_user.id in (Config.AUTH_USERS & Config.LAZY_DEVELOPER):
+    if update.from_user.id in (Config.AUTH_USERS | Config.LAZY_DEVELOPER):
         # logger.info(update)
         await bot.send_message(
             chat_id=update.chat.id,
@@ -93,4 +93,3 @@ async def start(bot, update):
             ),
             reply_to_message_id=update.message_id
         )
-         

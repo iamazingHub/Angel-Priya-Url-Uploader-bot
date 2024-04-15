@@ -26,19 +26,6 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 from pyrogram.types.bots_and_keyboards import InlineKeyboardButton, InlineKeyboardMarkup
 
 
-@pyrogram.Client.on_message(pyrogram.filters.command(["help"]))
-async def help_user(bot, update):
-    if update.from_user.id in Config.AUTH_USERS:
-        # logger.info(update)
-        await bot.send_message(
-            chat_id=update.chat.id,
-            text=Translation.HELP_USER,
-            parse_mode="html",
-            disable_web_page_preview=True,
-            reply_to_message_id=update.message_id
-        )
-
-
 @pyrogram.Client.on_message(pyrogram.filters.command(["start"]))
 async def start(bot, update):
     if update.from_user.id in (Config.AUTH_USERS | Config.LAZY_DEVELOPER):
@@ -57,7 +44,7 @@ async def start(bot, update):
                     [InlineKeyboardButton("🦋 ⭑┗━━┫⦀⦙ O W N E R ⦙⦀┣━━┛⭑ 🦋", url="https://t.me/LazyDeveloperr")],
                 ]
             ),
-            reply_to_message_id=update.message_id
+            reply_to_message_id=update.message.message_id  # Use update.message.message_id instead of update.message_id
         )
     elif update.from_user.id in Config.AUTH_USERS:
         # logger.info(update)

@@ -28,8 +28,8 @@ from pyrogram.types.bots_and_keyboards import InlineKeyboardButton, InlineKeyboa
 
 @pyrogram.Client.on_message(pyrogram.filters.command(["start"]))
 async def start(bot, update):
-    if update.from_user.id in (Config.AUTH_USERS | Config.LAZY_DEVELOPER):
-        # logger.info(update)
+    message_id = update.message.message_id if update.message else None
+    if update.from_user and update.from_user.id in (Config.AUTH_USERS | Config.LAZY_DEVELOPER):
         await bot.send_message(
             chat_id=update.chat.id,
             text=Translation.LAZY_DEVELOPER_TEXT.format(update.from_user.first_name),
@@ -44,10 +44,9 @@ async def start(bot, update):
                     [InlineKeyboardButton("🦋 ⭑┗━━┫⦀⦙ O W N E R ⦙⦀┣━━┛⭑ 🦋", url="https://t.me/LazyDeveloperr")],
                 ]
             ),
-            reply_to_message_id=update.message.message_id  # Use update.message.message_id instead of update.message_id
+            reply_to_message_id=message_id
         )
-    elif update.from_user.id in Config.AUTH_USERS:
-        # logger.info(update)
+    elif update.from_user and update.from_user.id in Config.AUTH_USERS:
         await bot.send_message(
             chat_id=update.chat.id,
             text=Translation.START_TEXT.format(update.from_user.first_name),
@@ -62,10 +61,9 @@ async def start(bot, update):
                     [InlineKeyboardButton("🦋 ⭑┗━━┫⦀⦙ O W N E R ⦙⦀┣━━┛⭑ 🦋", url="https://t.me/LazyDeveloperr")],
                 ]
             ),
-            reply_to_message_id=update.message_id
+            reply_to_message_id=message_id
         )
     else:
-        # logger.info(update)
         await bot.send_message(
             chat_id=update.chat.id,
             text=Translation.LAZY_START_TEXT.format(update.from_user.first_name),
@@ -78,5 +76,5 @@ async def start(bot, update):
                     [InlineKeyboardButton("⭑💢 𝚂 𝙾 𝙲 𝚒 𝙰 𝙻 💢⭑", url="https://instagram.com/LazyDeveloper__")],
                 ]
             ),
-            reply_to_message_id=update.message_id
+            reply_to_message_id=message_id
         )
